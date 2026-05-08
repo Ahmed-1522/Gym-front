@@ -230,3 +230,70 @@
     @apply font-sans;
     }
 }
+
+/* FIX FOOTER LAYOUT */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+/* GOLD BUTTON */
+.gold-btn {
+  background: linear-gradient(135deg, #FFD700, #B8860B);
+  color: #111;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gold-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+  filter: brightness(1.05);
+}
+
+/* DARK BUTTON */
+.dark-btn {
+  background: #222;
+  color: #fff;
+  border: 1px solid #FFD700;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dark-btn:hover {
+  background: #FFD700;
+  color: #111;
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+}
+
+/* RED BUTTON */
+.red-btn {
+  background: #ff2e2e;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.red-btn:hover {
+  background: #ff0000;
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}

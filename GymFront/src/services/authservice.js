@@ -3,7 +3,7 @@ import { users } from "../data/users";
 export const registerUser = (data) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const exists = users.find((u) => u.email === data.email);
+      const exists = users.find(u => u.email === data.email);
 
       if (exists) {
         return reject(new Error("Email already exists"));
@@ -13,7 +13,7 @@ export const registerUser = (data) => {
 
       resolve({
         token: "fake-token-123",
-        role: data.role || "MEMBER",
+        role: "MEMBER",
         memberId: users.length,
         name: data.name,
         expiresIn: 86400,
@@ -22,11 +22,12 @@ export const registerUser = (data) => {
   });
 };
 
+
 export const loginUser = (data) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const user = users.find(
-        (u) => u.email === data.email && u.password === data.password,
+        (u) => u.email === data.email && u.password === data.password
       );
 
       if (!user) {
@@ -34,9 +35,8 @@ export const loginUser = (data) => {
       }
 
       resolve({
-        token:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mockMemberPayload.mockSignature",
-        role: user.role || "MEMBER",
+        token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.mockMemberPayload.mockSignature",
+        role: "MEMBER",
         memberId: 101,
         name: user.name,
         expiresIn: 86400,

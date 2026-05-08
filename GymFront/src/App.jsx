@@ -1,28 +1,18 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Layout from './components/Layout/Layout'
+import Subscription from './components/Subscription';
+import './App.css';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Layout from './components/Layout/Layout';
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import NotFound from './components/NotFound/NotFound'
-import '@fortawesome/fontawesome-free/css/all.min.css'
-import AdminHome from './components/Admin/AdminHome'
-import MemberHome from './components/Member/MemberHome'
-import ProtectedRoute from './ProtectedRoute'
-import { MygetAuth } from './services/authservice'
-import UserContextProvider from './context/UserContext'
-import Logout from './logout/Logout'
-import Reports from './components/Admin/AdminReports'
+import NotFound from './components/NotFound/NotFound';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import AdminHome from './components/Admin/AdminHome';
+import MemberHome from './components/Member/MemberHome';
+import UserContextProvider from './context/UserContext';
+import Logout from './logout/Logout';
 
-
-
-
-
-const x = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "",
     element: <Layout />,
@@ -31,41 +21,25 @@ const x = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/logout", element: <Logout /> },
-      { path: "/reports", element: <Reports /> },
+      { path: "/subscription", element: <Subscription /> },
 
-      {
-        path: "/admin",
-        element: (
-          <ProtectedRoute role="ADMIN">
-            <AdminHome />
-          </ProtectedRoute>
-        ),
-      },
+      // 👇 الميمبر من غير حماية مؤقتًا
+      { path: "/member", element: <MemberHome /> },
 
-      {
-        path: "/member",
-        element: (
-          <ProtectedRoute role="MEMBER">
-            <MemberHome />
-          </ProtectedRoute>
-        ),
-      },
+      // 👇 الادمن (ممكن تسيبيه أو تشيليه لو مش محتاجاه دلوقتي)
+      { path: "/admin", element: <AdminHome /> },
 
       { path: "*", element: <NotFound /> },
     ],
   },
 ]);
-function App() {
-  
 
-  return (<>
-   <>
-   <UserContextProvider>
-    <RouterProvider router={x}></RouterProvider>
-   </UserContextProvider>
-   </>
-  </>
-  )
+function App() {
+  return (
+    <UserContextProvider>
+      <RouterProvider router={router} />
+    </UserContextProvider>
+  );
 }
 
-export default App
+export default App;
