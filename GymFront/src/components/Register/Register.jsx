@@ -4,48 +4,73 @@ import { Input } from "@/components/ui/input";
 import backg from "../../assets/wallpaper.jpg";
 import { useForm } from "react-hook-form";
 import z from "zod";
-import { zodResolver } from './../../../node_modules/@hookform/resolvers/zod/src/zod';
-import { registerUser } from './../../services/authservice';
-
-
+import { zodResolver } from "./../../../node_modules/@hookform/resolvers/zod/src/zod";
+import { registerUser } from "./../../services/authservice";
+import axios from "axios";
 
 export default function Register() {
-const [isloading, setisloading] = useState(false)
+  const [isloading, setisloading] = useState(false);
 
+  const schema = z.object({
+    email: z.email("invalid email address"),
+    password: z
+      .string()
+      .regex(
+        /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+        "password is at least 8 chars with at least 1 uppercase letter and 1 lowercase letter and a number and 1 special chars {#?!@$%^&*-}",
+      ),
+  });
 
-  const schema = z
-      .object({
-        email: z.email("invalid email address"),
-        password: z
-          .string()
-          .regex(
-            /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-            "password is at least 8 chars with at least 1 uppercase letter and 1 lowercase letter and a number and 1 special chars {#?!@$%^&*-}"
-      )}) 
+  const form = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(schema),
+  });
 
-  const form =useForm({
-    defaultValues:{
-      email:"",
-      password:"",
-  },resolver:zodResolver(schema)
-})
+  let { register, handleSubmit, formState } = form;
 
-  let {register,handleSubmit,formState} = form
+  async function handleregister(data) {
+    try {
+      const res = await registerUser(data);
 
-async function handleregister(data) {
-  try {
-    const res = await registerUser(data);
+      console.log("Response:", res);
 
-    console.log("Response:", res);
+      // خزّن التوكن
+      localStorage.setItem("token", res.token);
 
-    // خزّن التوكن
-    localStorage.setItem("token", res.token);
-
-    alert("Registered successfully");
-  } catch (err) {
-    alert(err.message);
+      alert("Registered successfully");
+    } catch (err) {
+      alert(err.message);
+    }
   }
-}
+
+  // async function handleregister(data) {
+  //   try {
+  //     const res = await axios.post(
+  //       "http://localhost:8080/api/auth/register",
+  //       data,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       },
+  //     );
+
+  //     console.log(res.data);
+
+  //     localStorage.setItem("token", res.data.token);
+
+  //     alert("Registered successfully");
+  //   } catch (err) {
+  //     console.log(err);
+
+  //     alert(
+  //       err.response?.data?.message || err.message || "Something went wrong",
+  //     );
+  //   }
+  // }
 
   return (
     <div
@@ -61,27 +86,40 @@ async function handleregister(data) {
         >
           <h2 className="text-xl font-bold text-center">Register</h2>
 
-          <Input   {...register("name")} placeholder="Enter name" />
-            {formState.errors.name && (
-          <p className="text-red-500 text-sm">{formState.errors.name.message}</p>
-      )}
- 
+          <Input {...register("name")} placeholder="Enter name" />
+          {formState.errors.name && (
+            <p className="text-red-500 text-sm">
+              {formState.errors.name.message}
+            </p>
+          )}
 
           <Input {...register("email")} placeholder="Enter email" />
- {formState.errors.email && (
-          <p className="text-red-500 text-sm">{formState.errors.email.message}</p>
-      )}
+          {formState.errors.email && (
+            <p className="text-red-500 text-sm">
+              {formState.errors.email.message}
+            </p>
+          )}
 
           <Input {...register("password")} placeholder="Enter password" />
           {formState.errors.password && (
-          <p className="text-red-500 text-sm">{formState.errors.password.message}</p>
-      )}
+            <p className="text-red-500 text-sm">
+              {formState.errors.password.message}
+            </p>
+          )}
 
           <Input {...register("phone")} placeholder="Enter phone" />
 
-           <Button disabled={isloading} className="hover:bg-yellow-300" type="submit">
-              {isloading ? <i className="fas fa-spinner fa-spin"></i> : "Login"}
-            </Button>
+          <Button
+            disabled={isloading}
+            className="hover:bg-yellow-300"
+            type="submit"
+          >
+            {isloading ? (
+              <i className="fas fa-spinner fa-spin"></i>
+            ) : (
+              "Register"
+            )}
+          </Button>
         </form>
       </div>
     </div>

@@ -1,5 +1,15 @@
 import { users } from "../data/users";
 
+function safeParse(value) {
+  if (!value) return null;
+
+  try {
+    return JSON.parse(value);
+  } catch {
+    return value;
+  }
+}
+
 export const registerUser = (data) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -46,5 +56,24 @@ export const loginUser = (data) => {
 };
 
 export const MygetAuth = () => {
-  return JSON.parse(localStorage.getItem("auth"));
+  const auth = safeParse(localStorage.getItem("auth"));
+
+  if (auth?.token && auth?.role) {
+    return auth;
+  }
+
+  const token = safeParse(localStorage.getItem("token"));
+  const role = safeParse(localStorage.getItem("role"));
+
+  const normalizedToken = token?.token ?? token;
+  const normalizedRole = role?.role ?? role;
+
+  if (normalizedToken || normalizedRole) {
+    return {
+      token: normalizedToken,
+      role: normalizedRole,
+    };
+  }
+
+  return null;
 };
