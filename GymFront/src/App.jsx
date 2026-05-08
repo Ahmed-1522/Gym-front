@@ -1,16 +1,18 @@
-import Subscription from './components/Subscription';
-import './App.css';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Layout from './components/Layout/Layout';
-import Home from './components/Home/Home';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
-import NotFound from './components/NotFound/NotFound';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import AdminHome from './components/Admin/AdminHome';
-import MemberHome from './components/Member/MemberHome';
-import UserContextProvider from './context/UserContext';
-import Logout from './logout/Logout';
+import Subscription from "./components/Subscription";
+import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+import Home from "./components/Home/Home";
+import Login from "./components/Login/Login";
+import Register from "./components/Register/Register";
+import NotFound from "./components/NotFound/NotFound";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import AdminHome from "./components/Admin/AdminHome";
+import AdminReports from "./components/Admin/AdminReports";
+import MemberHome from "./components/Member/MemberHome";
+import UserContextProvider from "./context/UserContext";
+import Logout from "./logout/Logout";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -23,11 +25,33 @@ const router = createBrowserRouter([
       { path: "/logout", element: <Logout /> },
       { path: "/subscription", element: <Subscription /> },
 
-      // 👇 الميمبر من غير حماية مؤقتًا
-      { path: "/member", element: <MemberHome /> },
+      // 👇 الميمبر محمي برول
+      {
+        path: "/member",
+        element: (
+          <ProtectedRoute role="MEMBER">
+            <MemberHome />
+          </ProtectedRoute>
+        ),
+      },
 
-      // 👇 الادمن (ممكن تسيبيه أو تشيليه لو مش محتاجاه دلوقتي)
-      { path: "/admin", element: <AdminHome /> },
+      // 👇 الادمن محمي برول
+      {
+        path: "/admin",
+        element: (
+          <ProtectedRoute role="ADMIN">
+            <AdminHome />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/admin/reports",
+        element: (
+          <ProtectedRoute role="ADMIN">
+            <AdminReports />
+          </ProtectedRoute>
+        ),
+      },
 
       { path: "*", element: <NotFound /> },
     ],
