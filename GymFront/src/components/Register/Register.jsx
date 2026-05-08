@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from './../../../node_modules/@hookform/resolvers/zod/src/zod';
 import { registerUser } from './../../services/authservice';
+import axios from "axios";
 
 
 
@@ -34,18 +35,56 @@ const [isloading, setisloading] = useState(false)
 
 async function handleregister(data) {
   try {
-    const res = await registerUser(data);
+    const res = await axios.post(
+      "http://localhost:8080/api/auth/register",
+      data
+    );
 
-    console.log("Response:", res);
+    console.log(res.data);
 
-    // خزّن التوكن
-    localStorage.setItem("token", res.token);
+    localStorage.setItem("token", res.data.token);
 
     alert("Registered successfully");
   } catch (err) {
-    alert(err.message);
+    console.log(err);
+
+    alert(
+      err.response?.data?.message ||
+        err.message ||
+        "Something went wrong"
+    );
   }
 }
+
+
+  // axios.post("http://localhost:8080/api/auth/register",data)
+  // .then((res)=>{
+  //   console.log(res.data);
+  //   localStorage.setItem("token", res.data.token);
+  //   alert("Registered successfully");
+  // })
+  // .catch((err)=>{
+  //   alert(err.response.data.message);
+  // })
+
+
+  // try {
+  //   const res = await registerUser(data);
+
+  //   console.log("Response:", res);
+
+  //   // خزّن التوكن
+  //   localStorage.setItem("token", res.token);
+
+  //   alert("Registered successfully");
+  // } catch (err) {
+  //   alert(err.message);
+  // }
+
+
+
+
+
 
   return (
     <div

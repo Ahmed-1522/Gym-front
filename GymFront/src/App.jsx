@@ -16,6 +16,7 @@ import ProtectedRoute from './ProtectedRoute'
 import { MygetAuth } from './services/authservice'
 import UserContextProvider from './context/UserContext'
 import Logout from './logout/Logout'
+import Reports from './components/Admin/AdminReports'
 
 
 
@@ -30,6 +31,7 @@ const x = createBrowserRouter([
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/logout", element: <Logout /> },
+      { path: "/reports", element: <Reports /> },
 
       {
         path: "/admin",
