@@ -30,6 +30,10 @@ export default function MemberHome() {
 
         <h2 style={styles.name}>{member.name}</h2>
 
+        <p style={styles.memberId}>
+          Member ID: #{member.id}
+        </p>
+
         <p style={styles.info}>
           <span>Email:</span> {member.email}
         </p>
@@ -96,16 +100,15 @@ const styles = {
   },
 
   title: {
-  color: "#FFD700",
-  fontSize: "28px",
-  fontWeight: "800",
-  letterSpacing: "1px",
-  textAlign: "left",
-  marginBottom: "30px",
-  marginTop: "-20px",
-  marginLeft: "20px"
-},
-
+    color: "#FFD700",
+    fontSize: "28px",
+    fontWeight: "800",
+    letterSpacing: "1px",
+    textAlign: "left",
+    marginBottom: "30px",
+    marginTop: "-20px",
+    marginLeft: "20px"
+  },
 
   profileCard: {
     maxWidth: "650px",
@@ -134,7 +137,15 @@ const styles = {
 
   name: {
     fontSize: "32px",
-    marginBottom: "25px"
+    marginBottom: "10px"
+  },
+
+  memberId: {
+    color: "#FFD700",
+    fontSize: "18px",
+    marginBottom: "25px",
+    fontWeight: "600",
+    letterSpacing: "0.5px"
   },
 
   info: {

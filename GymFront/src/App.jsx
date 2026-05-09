@@ -8,7 +8,8 @@ import Register from "./components/Register/Register";
 import NotFound from "./components/NotFound/NotFound";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import AdminHome from "./components/Admin/AdminHome";
-import AdminReports from "./components/Admin/AdminReports";
+import AdminReports from "./components/Admin/Adminrepapitest";
+import AdminReportsMock from "./components/Admin/AdminReports";
 import MemberHome from "./components/Member/MemberHome";
 import UserContextProvider from "./context/UserContext";
 import Logout from "./logout/Logout";
@@ -25,7 +26,6 @@ const router = createBrowserRouter([
       { path: "/logout", element: <Logout /> },
       { path: "/subscription", element: <Subscription /> },
 
-      // 👇 الميمبر محمي برول
       {
         path: "/member",
         element: (
@@ -35,7 +35,6 @@ const router = createBrowserRouter([
         ),
       },
 
-      // 👇 الادمن محمي برول
       {
         path: "/admin",
         element: (
@@ -45,14 +44,21 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/admin/reports",
+        path: "reports",
         element: (
           <ProtectedRoute role="ADMIN">
             <AdminReports />
           </ProtectedRoute>
         ),
       },
-
+      {
+        path: "reports-mock",
+        element: (
+          <ProtectedRoute role="ADMIN">
+            <AdminReportsMock />
+          </ProtectedRoute>
+        ),
+      },
       { path: "*", element: <NotFound /> },
     ],
   },
