@@ -1,4 +1,4 @@
-import Subscription from "./components/Subscription";
+import Subscription from "./components/Admin/Subscriptions";
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
@@ -56,6 +56,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute role="ADMIN">
             <AdminReportsMock />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "subscriptions",
+        element: (
+          <ProtectedRoute role="ADMIN">
+            <Subscription />
           </ProtectedRoute>
         ),
       },
